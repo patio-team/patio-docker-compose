@@ -2,7 +2,7 @@
 
 # Don't Worry Be Happy - Docker image -
 
-![dwbh](etc/site/imgs/dwbh.png)
+![dwbh](files/dwbh.png)
 
 **Don't Worry Be Happy** is a web application that tries to measure
 the happiness of a given team periodically by asking for a level of
