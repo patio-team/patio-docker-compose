@@ -41,8 +41,8 @@ docker run -p 80:80 kaleidos-docker-registry.bintray.io/dwbh/dwbh:latest
 
 The Docker image allows to set several different parameters to customize your running image:
 
-| Name                       | Value                       |                 default                                       |
-| -------------------------- |:---------------------------:| -------------------------------------------------------------:|
+| Name                       | Value                       | Default value                                                 |
+|:---------------------------|:----------------------------|:--------------------------------------------------------------|
 | DWBH_JDBC_URL              | JDBC url                    | jdbc:postgresql://localhost:5432/dwbh                         |
 | DWBH_JDBC_USER             | JDBC username               | dwbh                                                          |
 | DWBH_JDBC_PASSWORD         | JDBC password               | dwbh                                                          |
