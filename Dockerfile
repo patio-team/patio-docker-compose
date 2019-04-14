@@ -27,7 +27,7 @@ FROM openjdk:11-jdk-slim as container
 
 # LOCALE SETUP
 RUN apt-get update && \
-    apt-get install -yq locales ca-certificates wget sudo && \
+    apt-get install --no-install-recommends -yq locales ca-certificates wget sudo && \
     rm -rf /var/lib/apt/lists/* && \
     localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
@@ -35,7 +35,10 @@ ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 
 # POSTGRES >> SOURCES
-RUN apt-get update && apt-get install -yq gnupg
+RUN apt-get update && \
+    apt-get install -yq --no-install-recommends gnupg && \
+    rm -rf /var/lib/apt/lists/*
+
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
@@ -44,11 +47,12 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
 
 # POSTGRES >> INSTALL
 RUN apt-get update && \
-    apt-get install -yq \
+    apt-get install -yq --no-install-recommends \
     xz-utils \
     nginx \
     postgresql-11 \
-    postgresql-contrib-11
+    postgresql-contrib-11 && \
+    rm -rf /var/lib/apt/lists/*
 
 # POSTGRES >> CONFIG
 COPY files/pg_hba.conf /etc/postgresql/11/main/pg_hba.conf
