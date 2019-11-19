@@ -1,0 +1,35 @@
+version: "3"
+
+volumes:
+  postgres_data_dwbh:
+    driver: local
+
+services:
+
+  db:
+    image: postgres:10
+    environment:
+      POSTGRES_DB: dwbh
+      POSTGRES_USER: dwbh
+      POSTGRES_PASSWORD: dwbh
+    volumes:
+      - postgres_data_dwbh:/var/lib/postgresql/data
+
+  api:
+    build: ./dwbh-api
+    depends_on:
+      - db
+    environment:
+      # DATABASE
+      DWBH_JDBC_URL: jdbc:postgresql://db:5432/dwbh
+      DWBH_JDBC_USER: dwbh
+      DWBH_JDBC_PASSWORD: dwbh
+      DWBH_JDBC_DRIVER: org.postgresql.Driver
+
+  front:
+    build: ./dwbh-front
+    depends_on:
+      - api
+    ports:
+      - 80:80
+
