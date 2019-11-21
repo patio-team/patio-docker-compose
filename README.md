@@ -23,8 +23,8 @@ docker-compose up -d
 ```
 
 Then open then your browser at `http://localhost` you'll see the login
-page. The default user is `thanos@email.com` and the password is
-`avengers`.
+page. By default there's no user loaded in the system, you can enable 
+a default user (see DEFAULT USER section) or insert a user afterwards hitting the database directly.
 
 ## Configuration
 
@@ -72,6 +72,17 @@ Google Oauth2 settings are required if you want front end to be authenticated us
 | DWBH_OAUTH2_CALLBACK       | Oauth2 callback URL         |                                                               |
 
 `DWBH_OAUTH2_CALLBACK` must match frontend `VUE_APP_REDIRECT_URI` variable.
+
+#### DEFAULT USER
+
+In case you'd like to start the instance with a default user you can use the following environment variables:
+
+| Name                       | Description                 | Default value                                                 |
+|:---------------------------|:----------------------------|:--------------------------------------------------------------|
+| DWBH_DUSER_ENABLED            | Whether or not to insert default user            | false   |
+| DWBH_DUSER_NAME            | Default user's name            |    |
+| DWBH_DUSER_EMAIL            | Default user's email            |    |
+| DWBH_DUSER_PASSWORD            | Default user's plain text password            |    |
 
 ### Frontend
 
