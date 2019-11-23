@@ -3,7 +3,7 @@
 # -------------------------------
 FROM node:10.15.1 as front
 
-RUN git clone --single-branch --branch oauth2 https://github.com/dont-worry-be-happy/dwbh-front.git /build/dwbh-front
+RUN git clone --single-branch https://github.com/dont-worry-be-happy/dwbh-front.git /build/dwbh-front
 WORKDIR /build/dwbh-front
 
 # Production configuration

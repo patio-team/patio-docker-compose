@@ -3,7 +3,7 @@
 # -------------------------------
 FROM openjdk:11-jdk as back
 
-RUN git clone --single-branch --branch keycloak_integration https://github.com/dont-worry-be-happy/dwbh-api.git /build/dwbh-api
+RUN git clone --single-branch https://github.com/dont-worry-be-happy/dwbh-api.git /build/dwbh-api
 WORKDIR /build/dwbh-api
 RUN ./gradlew assemble
 
@@ -33,12 +33,19 @@ ENV DWBH_JDBC_USER=dwbh
 ENV DWBH_JDBC_PASSWORD=dwbh
 ENV DWBH_JDBC_DRIVER=org.postgresql.Driver
 
-ENV DWBH_AWS_EMAIL_ENABLED: "false"
+ENV DWBH_AWS_EMAIL_ENABLED=false
+ENV DWBH_AWS_EMAIL_REGION=none
+ENV DWBH_AWS_EMAIL_SOURCE=none
 
-ENV DWBH_JWT_SECRET: mysupersecret
-ENV DWBH_JWT_ALGO: HS256
-ENV DWBH_JWT_ISSUER: dwbh
+ENV DWBH_JWT_SECRET=mysupersecret
+ENV DWBH_JWT_ALGO=HS256
+ENV DWBH_JWT_ISSUER=dwbh
 ENV DWBH_JWT_DAYS=7
+
+ENV DWBH_DUSER_ENABLED=false
+ENV DWBH_DUSER_NAME=thanos
+ENV DWBH_DUSER_EMAIL=none
+ENV DWBH_DUSER_PASSWORD=none
 
 COPY --from=back /build/dwbh-api/build/libs/dwbh-api-0.1.0-all.jar /back/
 
