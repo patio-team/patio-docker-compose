@@ -7,11 +7,11 @@ RUN git clone --single-branch https://github.com/dont-worry-be-happy/dwbh-front.
 WORKDIR /build/dwbh-front
 
 # Production configuration
-COPY files/.env.production /build/dwbh-front
+COPY files/.env /build/dwbh-front/.env.local
 
 # Configuring variable to tell front end where to find back end
 # endpoint right before building the distribution
-RUN sed -i "s/\$DWBH_API_URL/\/graphql/g" .env
+RUN sed -i "s/\$DWBH_API_URL/\/graphql/g" .env.local
 RUN yarn add -D vue-cli && yarn build
 
 # -------------------------------
