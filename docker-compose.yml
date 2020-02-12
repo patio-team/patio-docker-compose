@@ -22,14 +22,40 @@ services:
     environment:
       # DATABASE
       DWBH_JDBC_URL: jdbc:postgresql://db:5432/dwbh
-      DWBH_JDBC_USER: dwbh
-      DWBH_JDBC_PASSWORD: dwbh
+      DWBH_JDBC_USER: user
+      DWBH_JDBC_PASSWORD: password
       DWBH_JDBC_DRIVER: org.postgresql.Driver
+      # AWS MAIL
+      DWBH_AWS_EMAIL_ENABLED: "true"
+      DWBH_AWS_EMAIL_REGION: region
+      DWBH_AWS_EMAIL_SOURCE: email_source
+      DWBH_AWS_ACCESS_KEY: access_key
+      DWBH_AWS_SECRET_KEY: secret_key
+      # DEFAULT USER
+      DWBH_DUSER_ENABLED: "true"
+      DWBH_DUSER_NAME: hello
+      DWBH_DUSER_EMAIL: hello@email.com
+      DWBH_DUSER_PASSWORD: password
+      # JWT AUTHENTICATION
+      DWBH_JWT_SECRET: mysupersecret
+      DWBH_JWT_ALGO: HS256
+      DWBH_JWT_ISSUER: dwbh
+      DWBH_JWT_DAYS: 7
+      # OAUTH
+      DWBH_OAUTH2_KEY: oauth_2_key
+      DWBH_OAUTH2_SECRET: oauth_2_secret
+      DWBH_OAUTH2_CALLBACK: oauth_2_callback
 
   front:
-    build: ./dwbh-front
+    build:
+      context: ./dwbh-front
+      args:
+        VUE_APP_API_URL: api_url
+        VUE_APP_OAUTH2_CLIENT_ID: oauth2_client_id
+        VUE_APP_TOKEN_URI: token_uri
+        VUE_APP_AUTH_URI: auth_uri
+        VUE_APP_SCOPE: 'email'
     depends_on:
       - api
     ports:
-      - 80:80
-
+      - 20000:80

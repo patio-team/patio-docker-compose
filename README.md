@@ -23,7 +23,7 @@ docker-compose up -d
 ```
 
 Then open then your browser at `http://localhost` you'll see the login
-page. By default there's no user loaded in the system, you can enable 
+page. By default there's no user loaded in the system, you can enable
 a default user (see DEFAULT USER section) or insert a user afterwards hitting the database directly.
 
 ## Configuration
@@ -46,8 +46,8 @@ environment variables in the Docker compose description file.
 
 | Name                       | Description                 | Default value                                                 |
 |:---------------------------|:----------------------------|:--------------------------------------------------------------|
-| DWBH_ACCESS_KEY            | AWS access key              |                                                               |
-| DWBH_SECRET_KEY            | AWS secret key              |                                                               |
+| DWBH_AWS_ACCESS_KEY        | AWS access key              |                                                               |
+| DWBH_AWS_SECRET_KEY        | AWS secret key              |                                                               |
 | DWBH_AWS_EMAIL_SOURCE      | AWS source email            |                                                               |
 | DWBH_AWS_EMAIL_REGION      | AWS region                  |                                                               |
 | DWBH_AWS_EMAIL_ENABLED     | Enable AWS mailing          |                                                               |
@@ -77,32 +77,36 @@ Google Oauth2 settings are required if you want front end to be authenticated us
 
 In case you'd like to start the instance with a default user you can use the following environment variables:
 
-| Name                       | Description                 | Default value                                                 |
-|:---------------------------|:----------------------------|:--------------------------------------------------------------|
-| DWBH_DUSER_ENABLED            | Whether or not to insert default user            | false   |
-| DWBH_DUSER_NAME            | Default user's name            |    |
-| DWBH_DUSER_EMAIL            | Default user's email            |    |
-| DWBH_DUSER_PASSWORD            | Default user's plain text password            |    |
+| Name                       | Description                           | Default value                                       |
+|:---------------------------|:--------------------------------------|:----------------------------------------------------|
+| DWBH_DUSER_ENABLED         | Whether or not to insert default user | false                                               |
+| DWBH_DUSER_NAME            | Default user's name                   |                                                     |
+| DWBH_DUSER_EMAIL           | Default user's email                  |                                                     |
+| DWBH_DUSER_PASSWORD        | Default user's plain text password    |                                                     |
 
 ### Frontend
 
 Because all environment variables are processed by webpack while building production code, the usual way of providing custom values is providing those values via `.env` files. In order to change frontend variables, change values at `./dwbh-front/files/.env.production.template` and copy it to `.env.production`. If you'd open the `.env.production.template` you'll find the following content.
 
 ```js
+VUE_APP_API_URL=
 // VUE_APP_DEBUG=false
-VUE_APP_API_URL=http://localhost/graphql
+// VUE_APP_I18N_LOCALE=en
+// VUE_APP_I18N_FALLBACK_LOCALE=en
 // VUE_APP_OAUTH2_CLIENT_ID=
 // VUE_APP_TOKEN_URI=
 // VUE_APP_AUTH_URI=
 // VUE_APP_REDIRECT_URI=
-// VUE_APP_SCOPE=
+// VUE_APP_SCOPE='email'
 ```
+
+TODO: documentar cómo setear estas variables en el docker-compose
 
 #### API
 
-| Name                       | Description                 | Default value                                                 |
-|:---------------------------|:----------------------------|:--------------------------------------------------------------|
-| VUE_APP_API_URL            | URL of the backend GraphQL API            | http://localhost/graphql |
+| Name                       | Description                        | Default value                                          |
+|:---------------------------|:-----------------------------------|:-------------------------------------------------------|
+| VUE_APP_API_URL            | URL of the backend GraphQL API     | http://localhost/graphql                               |
 
 #### GOOGLE OAUTH
 
@@ -110,11 +114,11 @@ The Google login button only appears if the following variables are set.
 
 | Name                       | Description                 | Default value                                                 |
 |:---------------------------|:----------------------------|:--------------------------------------------------------------|
-| VUE_APP_OAUTH2_CLIENT_ID   | Oauth2 client ID            | |
-| VUE_APP_AUTH_URI           | Oauth2 provider auth URI    | |
-| VUE_APP_TOKEN_URI          | OAuth2 provider token URI   | |
-| VUE_APP_REDIRECT_URI       | Oauth2 redirect uri         | |
-| VUE_APP_SCOPE              | Oauth2 main scope           | |
+| VUE_APP_OAUTH2_CLIENT_ID   | Oauth2 client ID            |                                                               |
+| VUE_APP_AUTH_URI           | Oauth2 provider auth URI    |                                                               |
+| VUE_APP_TOKEN_URI          | OAuth2 provider token URI   |                                                               |
+| VUE_APP_REDIRECT_URI       | Oauth2 redirect uri         |                                                               |
+| VUE_APP_SCOPE              | Oauth2 main scope           |                                                               |
 
 Backend `DWBH_OAUTH2_CALLBACK` variable must match frontend `VUE_APP_REDIRECT_URI` variable.
 

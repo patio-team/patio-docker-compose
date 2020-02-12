@@ -3,15 +3,17 @@
 # -------------------------------
 FROM node:10.15.1 as front
 
+ARG VUE_APP_API_URL
+ARG VUE_APP_SCOPE
+ARG VUE_APP_OAUTH2_CLIENT_ID
+ARG VUE_APP_TOKEN_URI
+ARG VUE_APP_AUTH_URI
+
 RUN git clone --single-branch https://github.com/dont-worry-be-happy/dwbh-front.git /build/dwbh-front
 WORKDIR /build/dwbh-front
 
-# Production configuration
-COPY files/.env /build/dwbh-front/.env.local
-
 # Configuring variable to tell front end where to find back end
 # endpoint right before building the distribution
-RUN sed -i "s/\$DWBH_API_URL/\/graphql/g" .env.local
 RUN yarn add -D vue-cli && yarn build
 
 # -------------------------------
