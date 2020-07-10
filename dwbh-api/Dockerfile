@@ -3,7 +3,7 @@
 # -------------------------------
 FROM openjdk:11-jdk as back
 
-RUN git clone --single-branch https://github.com/dont-worry-be-happy/dwbh-api.git /build/dwbh-api
+RUN git clone --single-branch https://github.com/patio-team/patio-api.git /build/dwbh-api
 WORKDIR /build/dwbh-api
 RUN ./gradlew assemble
 
