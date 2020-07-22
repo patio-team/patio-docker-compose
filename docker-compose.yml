@@ -1,7 +1,7 @@
 version: "3"
 
 volumes:
-  postgres_data_dwbh:
+  postgres_data_patio:
     driver: local
 
 services:
@@ -9,48 +9,49 @@ services:
   db:
     image: postgres:10
     environment:
-      POSTGRES_DB: dwbh
-      POSTGRES_USER: dwbh
-      POSTGRES_PASSWORD: dwbh
+      POSTGRES_DB: patio
+      POSTGRES_USER: patio
+      POSTGRES_PASSWORD: patio
     volumes:
-      - postgres_data_dwbh:/var/lib/postgresql/data
+      - postgres_data_patio:/var/lib/postgresql/data
 
   api:
-    build: ./dwbh-api
+    build: ./patio-api
     depends_on:
       - db
     environment:
+      PATIO_HOST:  localhost
       # DATABASE
-      DWBH_JDBC_URL: jdbc:postgresql://db:5432/dwbh
-      DWBH_JDBC_USER: user
-      DWBH_JDBC_PASSWORD: password
-      DWBH_JDBC_DRIVER: org.postgresql.Driver
+      PATIO_JDBC_URL: jdbc:postgresql://db:5432/patio
+      PATIO_JDBC_USER: patio
+      PATIO_JDBC_PASSWORD: patio
+      PATIO_JDBC_DRIVER: org.postgresql.Driver
       # AWS MAIL
-      DWBH_AWS_EMAIL_ENABLED: "true"
-      DWBH_AWS_EMAIL_REGION: region
-      DWBH_AWS_EMAIL_SOURCE: email_source
-      DWBH_AWS_ACCESS_KEY: access_key
-      DWBH_AWS_SECRET_KEY: secret_key
+      PATIO_AWS_EMAIL_ENABLED: "true"
+      PATIO_AWS_EMAIL_REGION: region
+      PATIO_AWS_EMAIL_SOURCE: email_source
+      PATIO_AWS_ACCESS_KEY: access_key
+      PATIO_AWS_SECRET_KEY: secret_key
       # DEFAULT USER
-      DWBH_DUSER_ENABLED: "true"
-      DWBH_DUSER_NAME: hello
-      DWBH_DUSER_EMAIL: hello@email.com
-      DWBH_DUSER_PASSWORD: password
+      PATIO_DUSER_ENABLED: "true"
+      PATIO_DUSER_NAME: hello
+      PATIO_DUSER_EMAIL: hello@email.com
+      PATIO_DUSER_PASSWORD: password
       # JWT AUTHENTICATION
-      DWBH_JWT_SECRET: mysupersecret
-      DWBH_JWT_ALGO: HS256
-      DWBH_JWT_ISSUER: dwbh
-      DWBH_JWT_DAYS: 7
+      PATIO_JWT_SECRET: mysupersecret
+      PATIO_JWT_ALGO: HS256
+      PATIO_JWT_ISSUER: patio
+      PATIO_JWT_DAYS: 7
       # OAUTH
-      DWBH_OAUTH2_KEY: oauth_2_key
-      DWBH_OAUTH2_SECRET: oauth_2_secret
-      DWBH_OAUTH2_CALLBACK: oauth_2_callback
+      PATIO_OAUTH2_KEY: oauth_2_key
+      PATIO_OAUTH2_SECRET: oauth_2_secret
+      PATIO_OAUTH2_CALLBACK: oauth_2_callback
 
   front:
     build:
-      context: ./dwbh-front
+      context: ./patio-front
       args:
-        VUE_APP_API_URL: api_url
+        VUE_APP_API_URL: graphql
         VUE_APP_OAUTH2_CLIENT_ID: oauth2_client_id
         VUE_APP_TOKEN_URI: token_uri
         VUE_APP_AUTH_URI: auth_uri

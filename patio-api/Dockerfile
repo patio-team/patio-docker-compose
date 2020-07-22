@@ -3,8 +3,8 @@
 # -------------------------------
 FROM openjdk:11-jdk as back
 
-RUN git clone --single-branch https://github.com/patio-team/patio-api.git /build/dwbh-api
-WORKDIR /build/dwbh-api
+RUN git clone --single-branch https://github.com/patio-team/patio-api.git /build/patio-api
+WORKDIR /build/patio-api
 RUN ./gradlew assemble
 
 # -------------------------------
@@ -28,7 +28,7 @@ ENV LC_ALL en_US.UTF-8
 
 ENV MICRONAUT_ENVIRONMENTS=prod
 
-COPY --from=back /build/dwbh-api/build/libs/dwbh-api-0.1.0-all.jar /back/
+COPY --from=back /build/patio-api/build/libs/patio-api-0.1.0-all.jar /back/
 
 EXPOSE 8080
 
