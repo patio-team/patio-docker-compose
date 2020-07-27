@@ -9,8 +9,8 @@ ARG VUE_APP_OAUTH2_CLIENT_ID
 ARG VUE_APP_TOKEN_URI
 ARG VUE_APP_AUTH_URI
 
-RUN git clone --single-branch https://github.com/patio-team/patio-front.git /build/dwbh-front
-WORKDIR /build/dwbh-front
+RUN git clone --single-branch https://github.com/patio-team/patio-front.git /build/patio-front
+WORKDIR /build/patio-front
 
 # Configuring variable to tell front end where to find back end
 # endpoint right before building the distribution
@@ -23,6 +23,6 @@ FROM nginx:1.17-alpine as container
 
 # NGINX >> CONFIG
 COPY files/nginx.conf /etc/nginx/nginx.conf
-COPY --from=front /build/dwbh-front/dist /var/www/html
+COPY --from=front /build/patio-front/dist /var/www/html
 
 EXPOSE 80
